@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <title>Login and Registration</title>
+        <style>
+            body {
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        
+        <h1 style="margin:50px;">Welcome! Let's travel!</h1>
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+            <li style="color:red;"{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+        <div style="display:inline-block;vertical-align:top;margin:50px;">
+            <h2>Register</h2>
+            <form action='/create' method='post' style="display: inline-block;">
+                {% csrf_token %}
+                <label for="first-name">First name:</label>
+                <br>
+                <input id="first-name" type='text' name='first_name'>
+                <br>
+                Last name: 
+                <br>
+                <input type='text' name='last_name'><br>
+                Email: <br><input type='text' name='email'><br>
+                Password: <br><input type='password' name='password'><br>
+                Confirm password: <br><input type='password' name='confirm_password'><br>
+                <input type='submit' value='Register!'><br>
+            </form>
+        </div>
+        <div style="display:inline-block;vertical-align:top;margin:50px;">
+            <h2>Login</h2>
+            <form action='/login' method='post'>
+                {% csrf_token %}
+                Email: <br><input type='text' name='email'><br>
+                Password: <br><input type='password' name='password'><br>
+                <input type='submit' value='Login!'><br>
+            </form>
+        </div>
+    </body>
+</html>

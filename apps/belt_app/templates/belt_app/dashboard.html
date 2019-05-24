@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Trip Buddy Dashboard</title>
+    </head>
+    <body>
+        <h1 style="display: inline-block;">Hello {{this_user.first_name}}!</h1>
+        <h2 style="display: inline-block;"><a href="http://localhost:8000/logout">Logout</a></h2>
+        <a href="http://localhost:8000/trips/new" style="display: inline-block;">
+            <button>Create a new trip!</button>
+        </a>
+        <p>Your trips:</p>
+        <table class="table">
+            <thead>
+                <tr>
+                <th scope="col">Destination</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Plan</th>
+                <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trip in all_trips %}
+                    {% if trip.creator == this_user %}
+                    <tr>
+                        <th scope="row"><a href="http://localhost:8000/trips/{{trip.id}}">{{trip.destination}}</a></th>
+                        <td>{{trip.start_date}}</td>
+                        <td>{{trip.end_date}}</td>
+                        <td>{{trip.plan}}</td>
+                        <td><a href="http://localhost:8000/remove/{{trip.id}}">Remove</a> <a href="http://localhost:8000/trips/edit/{{trip.id}}">Edit</a></td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                {% for join in all_joins %}
+                    {% if join.trip.creator != this_user %}
+                        {% if join.user == this_user %}
+                        <tr>
+                            <th scope="row"><a href="http://localhost:8000/trips/{{join.trip.id}}">{{join.trip.destination}}</a></th>
+                            <td>{{join.trip.start_date}}</td>
+                            <td>{{join.trip.end_date}}</td>
+                            <td>{{join.trip.plan}}</td>
+                            <td><a href="http://localhost:8000/cancel/{{join.trip.id}}">Cancel</a></td>
+                        </tr>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <p>Other people's trips:</p>
+        <table class="table">
+            <thead>
+                <tr>
+                <th scope="col">Destination</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Plan</th>
+                <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trip in all_trips %}
+                    {% if trip.creator != this_user %}
+                    
+                        
+                        
+                                    <th scope="row"><a href="http://localhost:8000/trips/{{trip.id}}">{{trip.destination}}</a></th>
+                                    <td>{{trip.start_date}}</td>
+                                    <td>{{trip.end_date}}</td>
+                                    <td>{{trip.plan}}</td>
+                                    <td><a href="http://localhost:8000/trips/join/{{trip.id}}">Join</a></td>
+                                </tr>
+                                    
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>

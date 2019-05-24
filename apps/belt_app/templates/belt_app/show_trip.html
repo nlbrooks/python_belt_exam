@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>View Trip</title>
+    </head>
+    <body>
+        <h1>Hello {{this_user.first_name}}! Read about this trip!</h1>
+        <a href="http://localhost:8000/dashboard">Dashboard</a>
+        <a href="http://localhost:8000/logout">Logout</a>
+        <br>
+        <h2>{{this_trip.destination}}</h2>
+        <ul class="list-group">
+            <li class="list-group-item">Start Date: {{st_date}}</li>
+            <li class="list-group-item">End Date: {{ed_date}}</li>
+            <li class="list-group-item">Created On: {{c_date}}</li>
+            <li class="list-group-item">Last Updated: {{u_date}}</li>
+            <li class="list-group-item">Plan: {{this_trip.plan}}</li>
+            <li class="list-group-item">Created by: {{this_trip.creator.first_name}}</li>
+        </ul>
+        <p>People who've joined the trip:</p>
+        <ul class="list-group">
+            {% for join in all_joins %}
+                {% if join.trip == this_trip %}
+                <li class="list-group-item">{{join.user.first_name }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </body>
+</html>
